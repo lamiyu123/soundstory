@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<title>音频播放器</title>
+<script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+
+<script>
+function openWebPage() {
+  window.open('https://www.baidu.com', '_blank');
+}
+</script>
+<style>
+ .background-image {
+    width: 100%; /* 宽度为100% */
+    height: 400px; /* 高度自定义 */
+    background-image: url('background.jpg'); /* 背景图片 */
+    background-size: cover; /* 图片覆盖整个元素区域 */
+    background-position: center; /* 图片居中 */
+    background-repeat: no-repeat; /* 图片不重复 */
+  }
+
+
+  #audio-player {
+    width: 300px;
+  }
+  #progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    height: 5px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #007bff;
+    transition: width 0.1s;
+  }
+  .audio-button {
+    margin: 5px;
+  }
+
+#myModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+ 
+  .modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+ 
+  /* Fade in Modal */
+  .modal-fade-in {
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+  }
+ 
+  /* Fade out Modal */
+  .modal-fade-out {
+    animation-name: fadeOut;
+    animation-duration: 0.5s;
+  }
+ 
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+ 
+  @keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+
+</style>
+</head>
+<body>
+
+ <div class="background-image">
+
+<img id="Image" src="https://lamiyu123.github.io/soundstory/100.jpg" >
+
+
+
+</div>
+<p style="color: yellow;" > 序章 保健室的娇美大小姐</p>
+<div id="audio-player">
+  <audio id="audio" src="https://lamiyu123.github.io/soundstory/01.mp3" controls></audio>
+  <div id="progress-bar">
+    <div id="progress-bar-fill"></div>
+  </div>
+
+<p  style="color: yellow;" > 第二章  调情挠耳朵 黑川大小姐的奖励</p>
+<div id="audio-player">
+  <audio id="audio2" src="https://lamiyu123.github.io/soundstory/02.mp3" controls></audio>
+  <div id="progress-bar">
+    <div id="progress-bar-fill"></div>
+  </div>
+
+
+  
+</div>
+
+<script>
+function playAudio(src) {
+  var audio = document.getElementById('audio');
+  audio.src = src;
+  audio.load();
+  audio.play();
+}
+ 
+function updateProgress(audio, progressBarFill) {
+  var maxDuration = audio.duration;
+  var currentDuration = audio.currentTime;
+  var percentage = (currentDuration / maxDuration) * 100;
+  progressBarFill.style.width = percentage + '%';
+}
+ 
+window.onload = function() {
+  var audio = document.getElementById('audio');
+  var progressBarFill = document.getElementById('progress-bar-fill');
+ 
+  audio.addEventListener('timeupdate', function() {
+    updateProgress(audio, progressBarFill);
+  });
+ 
+  progressBarFill.addEventListener('mousedown', function(event) {
+    var progressBar = document.getElementById('progress-bar');
+    var clickOffset = event.clientX - progressBar.getBoundingClientRect().left;
+ 
+    document.addEventListener('mousemove', function(event) {
+      var percentage = (event.clientX - clickOffset) / progressBar.offsetWidth * 100;
+      progressBarFill.style.width = Math.min(100, Math.max(0, percentage)) + '%';
+    });
+ 
+    document.addEventListener('mouseup', function() {
+      document.removeEventListener('mousemove', function() {});
+      document.removeEventListener('mouseup', function() {});
+ 
+      audio.currentTime = audio.duration * (progressBarFill.offsetWidth / progressBar.offsetWidth);
+    });
+  });
+};
+</script>
+<body>
+ 
+<button style="width: 200px; height: 100px; background-color: #808080; color: yellow;"  >1.序章  保健室的娇美大小姐 </button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >2.调情挠耳朵 黑川大小姐的奖励 </button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >3.探望生病的大小姐　魅惑与调戏症候群【待解锁】</button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >4.大小姐的忠犬 【待解锁】</button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >5.保健室的猫  索求和给予本身就是爱情【待解锁】</button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >6.大小姐的心跳 我的 精神安定剂 【待解锁】</button>
+<button style="width: 200px; height: 100px; background-color: #808080; color: white;"  >7.和大小姐一同坠入梦乡   爱恋是那样的沉重 【待解锁】</button>
+
+
+</body>
+
+
+ <body>
+ 
+ 
+<button id="myButton"  style="width: 200px; height: 100px; background-color: #4CAF50; color: white;" >点击解锁全章节内容</button>
+ 
+<div id="myModal" class="modal-content">
+  <img src="https://lamiyu123.github.io/soundstory/pay.png" alt="图片" class="modal-fade-in">
+</div>
+ 
+<script>
+document.getElementById('myButton').onclick = function() {
+  // 获取模态框元素
+  var modal = document.getElementById('myModal');
+ 
+  // 显示模态框
+  modal.classList.add('modal-fade-in');
+  modal.style.display = 'block';
+ 
+  // 添加关闭模态框的事件监听
+  modal.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      // 隐藏模态框
+      modal.classList.add('modal-fade-out');
+      setTimeout(function() {
+        modal.style.display = 'none';
+      }, 500); // 等待动画结束后移除模态框
+    }
+  });
+};
+</script>
+<p>- </p>
+<p>购买解锁后在这里上传订单截图 </p>
+</body>
+		<body>
+		<input type="file" id="file-inp" accept="image/*">
+		<img id="preview-img" style="max-width: 100%; margin: 15px; display: block;">
+		<div id="ocr-result" style="border: 1px solid; padding: 15px; display: none;" contenteditable></div>
+
+		<script>
+			const fileInp = document.querySelector('#file-inp');
+			const previewImg = document.querySelector('#preview-img');
+                       
+			const OCRresult = document.querySelector('#ocr-result');
+			
+			fileInp.addEventListener('change', function(e) {
+				const file = e.target.files[0];
+				if (!file) { return; };
+				const reader = new FileReader();
+                             
+				reader.onload = function(e) {
+					const image = new Image();
+					image.src = e.target.result;
+					image.onload = function() {
+						previewImg.src = image.src;
+						previewImg.style.display = 'none';
+						Tesseract.recognize(image,'chi_sim', {
+							logger: info => console.log(info)
+						}).then(result => {
+							console.log('【识别结果】', result);
+							if (result?.data?.text) {
+
+
+
+								OCRresult.style.display = 'none';
+								OCRresult.innerText = result?.data?.text+'123456';
+
+                                                         
+							}
+						}).catch(error => {
+							console.error('【错误】', error);
+						});
+					};
+				};
+				reader.readAsDataURL(file);
+			});
+		</script>
+	</body>
+
+
+<body>
+ 
+<div id="content">上传图片后等待20秒到1分钟再点击.</div>
+<button onclick="checkCharacter()">点击领取密码</button>
+ 
+<script>
+function checkCharacter() {
+  var content = OCRresult.innerText;
+  var str = '言';
+  if (content.includes(str)) {
+    alert('压缩包密码是sp69584115y69.');
+  } else {
+    alert('识别失败，请先上传订单截图。如付费后仍失败，可裁剪掉截图多余边框。或者发送1513UM及订单截图到邮箱，将通过邮箱回复密码');
+  }
+}
+</script>
+ 
+</body>
+
+</body>
+</html>
